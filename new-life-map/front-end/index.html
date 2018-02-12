@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Draggable directions</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div id="map"></div>
+
+<div id="right-panel">
+    <p>How many places you want to visit?</p>
+    <select>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+
+    <p>What kind of places you want to visit?</p>
+    <select>
+        <option value="Park">Park</option>
+        <option value="Museum">Museum</option>
+        <option value="Activity">Activity</option>
+    </select>
+
+    <p>How do you want to get to your destination?</p>
+    <select>
+        <option value="WALKING">Walking</option>
+        <option value="BIKING">Biking</option>
+        <option value="TRANSIT">Transit</option>
+        <option value="DRIVING">Driving</option>
+    </select>
+
+    <p>Total Distance: <span id="total"></span></p>
+</div>
+
+<script src="index.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxNuQOTlDI4Td_97Wsq8pcUhyFDpIDhyg&callback=initMap">
+</script>
+</body>
+</html>
