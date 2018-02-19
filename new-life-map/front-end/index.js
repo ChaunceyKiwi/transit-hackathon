@@ -12,7 +12,7 @@ function initMap()
     console.log(window.PARK_DATA);
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
-        center: from  // 1620 Cliff Avenue.
+        center: from
     });
 
     directionsService = new google.maps.DirectionsService;
@@ -25,13 +25,11 @@ function initMap()
     directionsDisplay.addListener('directions_changed', function() {
         computeTotalDistance(directionsDisplay.getDirections());
     });
-
-    drawSearchingScope(from, to, searchRange);
 }
 
 function displayRoute(origin, destination, service, display)
 {
-    var waypointFeasible = getWayPointsFeasible(window.LIBRARY_DATA, 1, from, to, searchRange);
+    var waypointFeasible = getWayPointsFeasible(window.LIBRARY_DATA, placeNum, from, to, searchRange);
 
     var waypts = [];
     for (var i = 0; i < waypointFeasible.length; i++) {
@@ -45,7 +43,7 @@ function displayRoute(origin, destination, service, display)
         origin: origin,
         destination: destination,
         waypoints: waypts,
-        travelMode: 'WALKING',
+        travelMode: transMode,
         avoidTolls: false
     }, function(response, status) {
         if (status === 'OK') {

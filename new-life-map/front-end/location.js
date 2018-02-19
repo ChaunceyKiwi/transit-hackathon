@@ -1,7 +1,7 @@
 window.LIBRARY_DATA = {};
 window.PARK_DATA = {};
-var loadedStatus = 0;
-const finishedStatus = 3;
+
+var searchRangeShape;
 
 function getData()
 {
@@ -10,11 +10,6 @@ function getData()
         var librariesArray = data;
         window.LIBRARY_DATA = librariesArray.libraries;
         addMarker(window.LIBRARY_DATA);
-        loadedStatus = loadedStatus + 1;
-        if (loadedStatus == finishedStatus)
-        {
-            displayRoute(from, to, directionsService, directionsDisplay);
-        }
 
         // drawSearchingScope(window.LIBRARY_DATA);
     });
@@ -23,12 +18,7 @@ function getData()
     $.get('/parks', function(data) {
         var parksArray = data;
         window.PARK_DATA = parksArray.parks;
-        loadedStatus = loadedStatus + 2;
 
-        if (loadedStatus == finishedStatus)
-        {
-            displayRoute(from, to, directionsService, directionsDisplay);
-        }
         // addMarker(window.PARK_DATA);
     });
 }
@@ -54,22 +44,6 @@ function getDistance(from, to)
     const latDiff = from.lat - to.lat;
     const lngDiff = from.lng - to.lng;
     return Math.sqrt(latDiff * latDiff + lngDiff * lngDiff);
-}
-
-function drawSearchingScope(from, to)
-{
-    var cityCircle = new google.maps.Circle({
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35,
-        map: map,
-        center: {lat: (from.lat + to.lat)/2, lng: (from.lng + to.lng)/2},
-        radius: getDistance(from, to) * 10000
-    });
-
-    cityCircle.setMap(map);
 }
 
 function getEllipseCoord(from, to, width)
@@ -104,7 +78,7 @@ function drawSearchingScope(from, to, width)
 {
     var coords = getEllipseCoord(from, to, width);
 
-    var shapes = new google.maps.Polygon({
+    searchRangeShape = new google.maps.Polygon({
         paths: coords,
         strokeColor: '#FF0000',
         strokeOpacity: 0.8,
@@ -113,7 +87,7 @@ function drawSearchingScope(from, to, width)
         fillOpacity: 0.35
     });
 
-    shapes.setMap(map);
+    searchRangeShape.setMap(map);
 }
 
 function getWayPointsFeasible(posArray, num, from, to, width)

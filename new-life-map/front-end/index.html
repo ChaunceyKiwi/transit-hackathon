@@ -11,31 +11,36 @@
 
 <div id="right-panel">
     <p>How many places you want to visit?</p>
-    <select>
+    <select id="placeNum">
+        <option value="0">0</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
     </select>
 
     <p>What kind of places you want to visit?</p>
-    <select>
+    <select id="placeKind">
         <option value="Park">Park</option>
         <option value="Museum">Museum</option>
-        <option value="Activity">Activity</option>
+        <option value="Library">Library</option>
     </select>
 
     <p>How do you want to get to your destination?</p>
-    <select>
+    <select id="transMode">
         <option value="WALKING">Walking</option>
-        <option value="BIKING">Biking</option>
+        <option value="BICYCLING">Bicycling</option>
         <option value="TRANSIT">Transit</option>
         <option value="DRIVING">Driving</option>
     </select>
+
+    <p> Show searching range: <input type="checkbox" id="showSearchRange"></p>
+    <button id="btn-route">Route</button>
 
     <p>Total Distance: <span id="total"></span></p>
 </div>
 
 <script src="jquery.min.js"></script>
+<script src="interaction.js"></script>
 <script src="location.js"></script>
 <script src="index.js"></script>
 <script async defer
