@@ -146,7 +146,12 @@ function getWayPointsFeasible(posArray, num, from, to, width)
         var pos = {lat: parseFloat(array[0]), lng: parseFloat(array[1])};
         diffLat = pos.lat - from.lat;
         diffLng = pos.lng - from.lng;
-        var angle2 = Math.round(Math.atan2(diffLat, diffLng) / Math.PI * 360);
+        var angle2 = Math.round(Math.atan2(diffLat, diffLng) / Math.PI * 180);
+        if (angle2 < 0)
+        {
+            angle2 = angle2 + 360;
+        }
+
         if (getDistance(from, pos) < parametricResults[angle2])
         {
             wayPointsFeasible.push(pos);
