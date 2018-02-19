@@ -1,14 +1,21 @@
-home = {lat: 49.269355, lng: -122.958724};
-metrotown = {lat: 49.2266034, lng: -123.0048016};
+to = {lat: 49.269355, lng: -122.958724};
+from = {lat: 49.2266034, lng: -123.0048016};
+var map;
+var directionsService;
+var directionsDisplay;
 
-function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
+function initMap()
+{
+    getData();
+
+    console.log(window.PARK_DATA);
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
-        center: home  // 1620 Cliff Avenue.
+        center: from  // 1620 Cliff Avenue.
     });
 
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer({
+    directionsService = new google.maps.DirectionsService;
+    directionsDisplay = new google.maps.DirectionsRenderer({
         draggable: true,
         map: map,
         panel: document.getElementById('right-panel')
@@ -18,16 +25,26 @@ function initMap() {
         computeTotalDistance(directionsDisplay.getDirections());
     });
 
-    displayRoute(home, metrotown, directionsService,
-        directionsDisplay);
+    drawSearchingScope(from, to, 0.05);
 }
 
-function displayRoute(origin, destination, service, display) {
+function displayRoute(origin, destination, service, display)
+{
+    var waypointFeasible = getWayPointsFeasible(window.LIBRARY_DATA, 1, from, to, 0.05);
+
+    var waypts = [];
+    for (var i = 0; i < waypointFeasible.length; i++) {
+        waypts.push({
+            location: waypointFeasible[i],
+            stopover: true
+        });
+    }
+
     service.route({
         origin: origin,
         destination: destination,
-        waypoints: [],
-        travelMode: 'TRANSIT',
+        waypoints: waypts,
+        travelMode: 'WALKING',
         avoidTolls: false
     }, function(response, status) {
         if (status === 'OK') {
@@ -38,7 +55,8 @@ function displayRoute(origin, destination, service, display) {
     });
 }
 
-function computeTotalDistance(result) {
+function computeTotalDistance(result)
+{
     var total = 0;
     var myroute = result.routes[0];
     for (var i = 0; i < myroute.legs.length; i++) {
