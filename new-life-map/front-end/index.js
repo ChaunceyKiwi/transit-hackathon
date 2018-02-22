@@ -1,4 +1,4 @@
-from = {lat: 49.269355, lng: -122.958724};
+from = {lat: 49.212954, lng: -122.937882};
 to = {lat: 49.2266034, lng: -123.0048016};
 var map;
 var directionsService;

@@ -10,16 +10,12 @@ function getData()
         var librariesArray = data;
         window.LIBRARY_DATA = librariesArray.libraries;
         addMarker(window.LIBRARY_DATA);
-
-        // drawSearchingScope(window.LIBRARY_DATA);
     });
 
     // Fetch data of parks from server
     $.get('/parks', function(data) {
         var parksArray = data;
         window.PARK_DATA = parksArray.parks;
-
-        // addMarker(window.PARK_DATA);
     });
 }
 
@@ -41,8 +37,8 @@ function addMarker(objArray)
 
 function getDistance(from, to)
 {
-    const latDiff = from.lat - to.lat;
-    const lngDiff = from.lng - to.lng;
+    const latDiff = Math.abs(from.lat - to.lat);
+    const lngDiff = Math.abs(from.lng - to.lng);
     return Math.sqrt(latDiff * latDiff + lngDiff * lngDiff);
 }
 
@@ -90,6 +86,11 @@ function drawSearchingScope(from, to, width)
     searchRangeShape.setMap(map);
 }
 
+function compareDistance(pos1, pos2)
+{
+    return getDistance(pos1, from) - getDistance(pos2, from);
+}
+
 function getWayPointsFeasible(posArray, num, from, to, width)
 {
     var wayPointsFeasible = [];
@@ -131,6 +132,8 @@ function getWayPointsFeasible(posArray, num, from, to, width)
             wayPointsFeasible.push(pos);
         }
     }
+
+    wayPointsFeasible.sort(compareDistance);
 
     /* TODO: sorting results based on distance */
 
