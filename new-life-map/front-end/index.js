@@ -3,13 +3,10 @@ to = {lat: 49.2266034, lng: -123.0048016};
 var map;
 var directionsService;
 var directionsDisplay;
-var searchRange = 0.05;
+var searchRange = 0.03;
 
 function initMap()
 {
-    getData();
-
-    console.log(window.PARK_DATA);
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
         center: from
@@ -27,9 +24,17 @@ function initMap()
     });
 }
 
-function displayRoute(origin, destination, service, display)
+function displayRoute(service, display)
 {
-    var waypointFeasible = getWayPointsFeasible(window.LIBRARY_DATA, placeNum, from, to, searchRange);
+    var waypointFeasible;
+    switch (placeKind) {
+        case "Library":
+            waypointFeasible = getWayPointsFeasible(window.LIBRARY_DATA, searchRange);
+            break;
+        case "Park":
+            waypointFeasible = getWayPointsFeasible(window.PARK_DATA, searchRange);
+            break;
+    }
 
     var waypts = [];
     for (var i = 0; i < waypointFeasible.length; i++) {
@@ -40,8 +45,8 @@ function displayRoute(origin, destination, service, display)
     }
 
     service.route({
-        origin: origin,
-        destination: destination,
+        origin: from,
+        destination: to,
         waypoints: waypts,
         travelMode: transMode,
         avoidTolls: false

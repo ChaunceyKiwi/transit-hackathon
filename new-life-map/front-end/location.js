@@ -2,22 +2,7 @@ window.LIBRARY_DATA = {};
 window.PARK_DATA = {};
 
 var searchRangeShape;
-
-function getData()
-{
-    // Fetch data of libraries from server
-    $.get('/libraries', function(data) {
-        var librariesArray = data;
-        window.LIBRARY_DATA = librariesArray.libraries;
-        addMarker(window.LIBRARY_DATA);
-    });
-
-    // Fetch data of parks from server
-    $.get('/parks', function(data) {
-        var parksArray = data;
-        window.PARK_DATA = parksArray.parks;
-    });
-}
+var markerSet = [];
 
 function addMarker(objArray)
 {
@@ -32,17 +17,25 @@ function addMarker(objArray)
             title: objArray[i].name
         });
         marker.setMap(map);
+        markerSet.push(marker);
     }
 }
 
-function getDistance(from, to)
+function clearMarker()
 {
-    const latDiff = Math.abs(from.lat - to.lat);
-    const lngDiff = Math.abs(from.lng - to.lng);
+    for (var i = 0; i < markerSet.length; i++) {
+        markerSet[i].setMap(null);
+    }
+}
+
+function getDistance(pos1, pos2)
+{
+    const latDiff = Math.abs(pos1.lat - pos2.lat);
+    const lngDiff = Math.abs(pos1.lng - pos2.lng);
     return Math.sqrt(latDiff * latDiff + lngDiff * lngDiff);
 }
 
-function getEllipseCoord(from, to, width)
+function getEllipseCoord(width)
 {
     const diffLat = to.lat - from.lat;
     const diffLng = to.lng - from.lng;
@@ -70,9 +63,9 @@ function getEllipseCoord(from, to, width)
     return results;
 }
 
-function drawSearchingScope(from, to, width)
+function drawSearchingScope(width)
 {
-    var coords = getEllipseCoord(from, to, width);
+    var coords = getEllipseCoord(width);
 
     searchRangeShape = new google.maps.Polygon({
         paths: coords,
@@ -91,7 +84,7 @@ function compareDistance(pos1, pos2)
     return getDistance(pos1, from) - getDistance(pos2, from);
 }
 
-function getWayPointsFeasible(posArray, num, from, to, width)
+function getWayPointsFeasible(posArray, width)
 {
     var wayPointsFeasible = [];
 
@@ -135,9 +128,7 @@ function getWayPointsFeasible(posArray, num, from, to, width)
 
     wayPointsFeasible.sort(compareDistance);
 
-    /* TODO: sorting results based on distance */
-
-    return wayPointsFeasible.slice(0, num);
+    return wayPointsFeasible.slice(0, placeNum);
 }
 
 
