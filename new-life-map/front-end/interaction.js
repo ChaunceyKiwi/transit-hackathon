@@ -7,6 +7,9 @@ $("#btn-route").click(function() {
     placeKind = $("#placeKind").val();
     transMode = $("#transMode").val();
 
+    originMarker.setMap(null);
+    destinationMarker.setMap(null);
+
     if (placeKind == "Library") {
         // Fetch data of libraries from server
         $.get('/libraries', function(data) {
@@ -26,7 +29,6 @@ $("#btn-route").click(function() {
             displayRoute(directionsService, directionsDisplay);
         });
     }
-
 });
 
 $("#showSearchRange").click(function(){

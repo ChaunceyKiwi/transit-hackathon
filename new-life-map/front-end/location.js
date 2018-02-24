@@ -3,6 +3,30 @@ window.PARK_DATA = {};
 
 var searchRangeShape;
 var markerSet = [];
+var originMarker;
+var destinationMarker;
+
+function setOriginMarker(pos)
+{
+    originMarker = new google.maps.Marker({
+        position: pos,
+        map: map,
+        title: "origin",
+        label: 'A'
+    });
+    originMarker.setMap(map);
+}
+
+function setDestinationMarker(pos)
+{
+    destinationMarker = new google.maps.Marker({
+        position: pos,
+        map: map,
+        title: "destination",
+        label: 'B'
+    });
+    destinationMarker.setMap(map);
+}
 
 function addMarker(objArray)
 {

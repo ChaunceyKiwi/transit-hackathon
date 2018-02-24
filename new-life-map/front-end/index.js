@@ -1,14 +1,23 @@
-from = {lat: 49.212954, lng: -122.937882};
-to = {lat: 49.2266034, lng: -123.0048016};
+from = {lat: 49.269355, lng: -122.958724};
+to = {lat: 49.2640424, lng: -123.1274355};
 var map;
 var directionsService;
 var directionsDisplay;
-var searchRange = 0.03;
+var searchRange = 0.08;
 
 function initMap()
 {
+    initAutocomplete();
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
+        center: from
+    });
+}
+
+function updateMap()
+{
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11,
         center: from
     });
 
@@ -18,6 +27,9 @@ function initMap()
         map: map,
         panel: document.getElementById('right-panel')
     });
+
+    setOriginMarker(from);
+    setDestinationMarker(to);
 
     directionsDisplay.addListener('directions_changed', function() {
         computeTotalDistance(directionsDisplay.getDirections());

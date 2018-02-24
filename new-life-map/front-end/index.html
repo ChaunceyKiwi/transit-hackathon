@@ -3,13 +3,25 @@
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Draggable directions</title>
+    <title>Longest Path Map</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
 <div id="map"></div>
 
 <div id="right-panel">
+    <div id="locationField">
+        <input id="autocompleteFrom" placeholder="Enter origin address"
+               onFocus="geolocate()" type="text">
+        </input>
+
+        <input id="autocompleteTo" placeholder="Enter destination address"
+               onFocus="geolocate()" type="text">
+        </input>
+    </div>
+
+    <button id="btn-from-to" onclick="updateMap()">Confirm</button>
+
     <p>How many places you want to visit?</p>
     <select id="placeNum">
         <option value="0">0</option>
@@ -40,11 +52,11 @@
 </div>
 
 <script src="jquery.min.js"></script>
+<script src="form.js"></script>
 <script src="interaction.js"></script>
 <script src="location.js"></script>
 <script src="index.js"></script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxNuQOTlDI4Td_97Wsq8pcUhyFDpIDhyg&callback=initMap">
-</script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxNuQOTlDI4Td_97Wsq8pcUhyFDpIDhyg&libraries=places&callback=initMap"></script>
 </body>
 </html>

@@ -63,6 +63,16 @@ var getInterationJS = function(request, response)
     });
 };
 
+var getFormJS = function(request, response)
+{
+    response.statusCode = 200;
+    response.setHeader('Content-Type', 'application/javascript');
+    response.setHeader('Cache-Control', 'public, max-age=1800');
+    fs.readFile(__dirname + '/front-end/form.js', function(err, data) {
+        response.end(data);
+    });
+};
+
 var getLibraryInfo = function(request, response)
 {
     response.statusCode = 200;
@@ -89,10 +99,9 @@ app.get('/index.js', getMainJS);
 app.get('/jquery.min.js', getJQuery);
 app.get('/location.js', getLocationJS);
 app.get('/interaction.js', getInterationJS);
+app.get('/form.js', getFormJS);
 app.get('/libraries', getLibraryInfo);
 app.get('/parks', getParkInfo);
-
-
 
 app.listen(8080, function () {
     console.log('The server is listening on port 8080!')
