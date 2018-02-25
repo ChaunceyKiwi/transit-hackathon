@@ -19,7 +19,7 @@ var getParkInfo = function(request, response)
     response.statusCode = 200;
     response.setHeader('Content-Type', 'application/json');
     response.setHeader('Cache-Control', 'public, max-age=1800');
-    fs.readFile(__dirname + '/data/park.json', function(err, data) {
+    fs.readFile(__dirname + '/data/PARKS.json', function(err, data) {
         response.end(data);
     });
 };

@@ -30,18 +30,38 @@ $("#search-btn").click(function() {
     });
 
     $.get('/parks', function(data) {
-        var parksArray = data;
-        addMarker(parksArray.parks, "park");
-    });
-});
+        var parksArray = [];
+        var features = data.features;
+        var parkCoords = [];
+        features.forEach(function(feature) {
+            var properties = feature.properties;
+            var park = {};
+            park.name = properties.Name;
+            park.location = properties.StrNum+" "+properties.StrName;
 
-$("#showSearchRange").click(function(){
-    if ($("#showSearchRange").is(":checked")) {
-        drawSearchingScope(searchRange);
-    }
-    else {
-        searchRangeShape.setMap(null);
-    }
+            if (properties.Site_Area > 50000) {
+                if (feature.geometry.type === "MultiPolygon") {
+                    var polygons = feature.geometry.coordinates;
+                    var polygonCoords = [];
+                    polygons.forEach(function(polygon) {
+                        polygonCoords.push(polygon[0]);
+                    });
+                    parkCoords.push(polygonCoords);
+                    park.position = polygonCoords[0][0][1]+","+polygonCoords[0][0][0];
+                } else {
+                    var coords = feature.geometry.coordinates[0];
+                    var polygonCoords = [];
+                    polygonCoords.push(coords);
+                    parkCoords.push(polygonCoords);
+                    park.position = coords[0][1]+","+coords[0][0];
+                }
+                parksArray.push(park);
+            }
+        });
+
+        drawPolygon(parkCoords);
+        addMarker(parksArray, "park");
+    });
 });
 
 $("#library-check-btn").click(function() {

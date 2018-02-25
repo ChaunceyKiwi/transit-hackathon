@@ -53,7 +53,7 @@ function addMarker(objArray, type)
     for (var i = 0; i < objArrayFiltered.length; i++)
     {
         var infowindow = new google.maps.InfoWindow({
-            content: "My Id is " +  i + "!"
+            content: objArrayFiltered[i].name
         });
 
         var marker = new google.maps.Marker({
@@ -76,12 +76,8 @@ function addMarker(objArray, type)
             }
         });
 
-        marker.addListener('mouseover', function() {
+        marker.addListener('dblclick', function() {
             this.window.open(map, this);
-        });
-
-        marker.addListener('mouseout', function() {
-           this.window.close();
         });
 
         marker.setMap(map);
@@ -180,6 +176,7 @@ function getWayPointsFeasible(posArray)
         var string = posArray[j].position;
         var array = string.split(',');
         var pos = {lat: parseFloat(array[0]), lng: parseFloat(array[1])};
+        pos.name = posArray[j].name;
         diffLat = pos.lat - from.lat;
         diffLng = pos.lng - from.lng;
         var angle2 = Math.round(Math.atan2(diffLat, diffLng) / Math.PI * 180);
@@ -197,7 +194,30 @@ function getWayPointsFeasible(posArray)
     return wayPointsFeasible;
 }
 
+function drawPolygon(parks)
+{
+    parks.forEach(function(park) {
+        park.forEach(function(coords){
+            var coordObjects = [];
+            coords.forEach(function(coord) {
+                var coordObject = {};
+                coordObject.lng = coord[0];
+                coordObject.lat = coord[1];
+                coordObjects.push(coordObject);
+            });
+            var polygon = new google.maps.Polygon({
+                paths: coordObjects,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#33cc33',
+                fillOpacity: 0.35
+            });
+            polygon.setMap(map);
+        });
+    });
 
+}
 
 
 

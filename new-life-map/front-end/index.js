@@ -3,7 +3,7 @@ to = {lat: 49.2266034, lng: -123.0048016};
 var map;
 var directionsService;
 var directionsDisplay;
-var searchRange = 0.03;
+var searchRange = 0.01;
 var waypts;
 
 function initMap()
@@ -11,7 +11,7 @@ function initMap()
     switchView(0);
     initAutocomplete();
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
+        zoom: 10,
         center: from
     });
 }
