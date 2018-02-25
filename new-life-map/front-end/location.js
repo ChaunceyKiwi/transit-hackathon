@@ -5,6 +5,7 @@ var searchRangeShape;
 var markerSet = [];
 var originMarker;
 var destinationMarker;
+var markerSetTest = new Set();
 
 function setOriginMarker(pos)
 {
@@ -35,11 +36,38 @@ function addMarker(objArray)
         var string = objArray[i].position;
         var array = string.split(',');
         var pos = {lat: parseFloat(array[0]), lng: parseFloat(array[1])};
+
+        var infowindow = new google.maps.InfoWindow({
+            content: "My Id is " +  i + "!"
+        });
+
         var marker = new google.maps.Marker({
             position: pos,
             map: map,
-            title: objArray[i].name
+            title: objArray[i].name,
+            icon: 'grey-marker.png'
         });
+
+        marker.window = infowindow;
+
+        marker.addListener('click', function() {
+            if (markerSetTest.has(this)) {
+                this.setIcon('grey-marker.png');
+                markerSetTest.delete(this);
+            } else {
+                this.setIcon('red-marker.png');
+                markerSetTest.add(this);
+            }
+        });
+
+        marker.addListener('mouseover', function() {
+            this.window.open(map, this);
+        });
+
+        marker.addListener('mouseout', function() {
+           this.window.close();
+        });
+
         marker.setMap(map);
         markerSet.push(marker);
     }
