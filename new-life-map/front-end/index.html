@@ -22,11 +22,13 @@
         </div>
 
         <div class="row" id="user-input">
+            <div class="col-12 page-label">
+                <label><b>Option setting:</b></label>
+            </div>
             <div class="col-1"></div>
             <div class="col-11">
                 <input id="autocompleteFrom" class="input-form" placeholder="Origin"  type="text" style="margin-top: 10px"></input>
                 <input id="autocompleteTo" class="input-form" placeholder="Destination" type="text" style="margin-top: 10px"></input>
-                <!--<input id="transMode" class="input-form" placeholder="Transportation" type="text" style="margin-top: 10px"></input>-->
 
                 <form class="input-form" id="transModeForm">
                     <select id="transMode">
@@ -37,7 +39,7 @@
                     </select>
                 </form>
 
-                <input id="hourEstimate" class="input-form" placeholder="Estimated Hour" type="text" style="margin-top: 10px"></input>
+                <input id="hourEstimate" class="input-form" placeholder="Time Available" type="text" style="margin-top: 10px"></input>
                 <button type="button" class="btn btn-default" id="search-btn">
                     <i class="fa fa-search"></i>
                 </button>
@@ -49,44 +51,55 @@
                     <i class="fa fa-arrow-left" style="font-size: 20px"></i>
                 </button>
             </div>
-            <div class="col-5">
+            <div class="col-6">
+                <div class="col-12 page-label">
+                    <label><b>Waypoints:</b></label>
+                </div>
+
                 <div class="candidate">
-                    <button type="button" id="library-check-btn" class="btn btn-default btn-xs check-box">
+                    <button type="button" id="library-check-btn" class="btn btn-default btn-xs check-box" style="padding: 4px">
                         <i class="fa fa-check-square"></i>
                         <label class="candidate-label">Library</label>
                     </button>
                 </div>
 
                 <div class="candidate">
-                    <button type="button" id="park-check-btn" class="btn btn-default btn-xs check-box">
+                    <button type="button" id="park-check-btn" class="btn btn-default btn-xs check-box" style="padding: 4px">
                         <i class="fa fa-check-square"></i>
                         <label class="candidate-label">Park</label>
                     </button>
                 </div>
 
                 <div class="candidate">
-                    <button type="button" id="restaurant-check-btn" class="btn btn-default btn-xs check-box">
+                    <button type="button" id="restaurant-check-btn" class="btn btn-default btn-xs check-box" style="padding: 4px">
                         <i class="fa fa-square"></i>
                         <label class="candidate-label">Restaurant</label>
                     </button>
                 </div>
 
                 <div class="candidate">
-                    <button type="button" id="activity-check-btn" class="btn btn-default check-box">
+                    <button type="button" id="activity-check-btn" class="btn btn-default check-box" style="padding: 4px">
                         <i class="fa fa-square"></i>
                         <label class="candidate-label">Activity</label>
                     </button>
                 </div>
             </div>
-            <div class="col-5">
+            <div class="col-4">
                 <button id="route-button" class="btn btn-default btn-lg check-box" onclick="switchView(2)">
                     <i class="fa fa-rocket"></i> Route
                 </button>
             </div>
         </div>
         <div class="row" id="display-result">
+            <div class="col-12">
+                <button id="back-btn2" class="btn btn-default btn-lg check-box" onclick="switchView(1)">
+                    <i class="fa fa-arrow-left" style="font-size: 20px"></i>
+                </button>
+                <p>Total Distance: <span id="total-dist"></span></p>
+                <p>Time Cost: <span id="total-time"></span></p>
+                <p>Time Spare: <span id="total-time-spare"></span></p>
+            </div>
             <div id="right-panel"></div>
-            <p>Total Distance: <span id="total"></span></p>
         </div>
     </div>
 

@@ -27,7 +27,11 @@ body {
     background-color: #4688f1;
 }
 
-.input-form {
+#display-result {
+    color: #e7f0fd;
+}
+
+ .input-form {
     background-color: #4688f1;
     border:none;
     border-bottom: 1px solid #98bdf7;
@@ -77,15 +81,36 @@ input[type=text] {
 
 .candidate-label {
     margin-left: 5px;
+    height: 80%;
+    padding: 0;
 }
 
 #route-button {
     margin-top: 67px;
+    margin-right: 20px;
     color: #e7f0fd;
 }
 
-.back-btn {
+.back-btn, back-btn2 {
     margin-top: 80px;
     background-color: #4688f1;
     color: #e7f0fd;
+}
+
+.adp-text, .adp-substep, .adp-summary, .adp-stepicon, .adp-legal {
+    color: #e7f0fd;
+}
+
+.adp-details, .adp-legal {
+    color: #e7f0fd;
+}
+
+tbody {
+    background-color: #4688f1;
+}
+
+.page-label {
+    height: 20px;
+    color: #e7f0fd;
+    font-size: large;
 }

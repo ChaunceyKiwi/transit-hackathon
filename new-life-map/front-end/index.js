@@ -4,9 +4,11 @@ var map;
 var directionsService;
 var directionsDisplay;
 var searchRange = 0.03;
+var waypts;
 
 function initMap()
 {
+    switchView(0);
     initAutocomplete();
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
@@ -40,7 +42,7 @@ function updateMap()
 
 function displayRoute(service, display, waypointFeasible)
 {
-    var waypts = [];
+    waypts = [];
     for (var i = 0; i < waypointFeasible.length; i++) {
         waypts.push({
             location: waypointFeasible[i],
@@ -63,13 +65,47 @@ function displayRoute(service, display, waypointFeasible)
     });
 }
 
+
+function timeParser(timeString)
+{
+    var unit = timeString.slice(-1);
+    var value = timeString.slice(0, -1);
+    if (unit == 'h') {
+        return parseFloat(value) * 3600;
+    } else if (unit == 'm') {
+        return parseFloat(value) * 60
+    } else {
+        return parseFloat(value);
+    }
+}
+
 function computeTotalDistance(result)
 {
     var total = 0;
+    var timeCostSec = 0;
     var myroute = result.routes[0];
     for (var i = 0; i < myroute.legs.length; i++) {
         total += myroute.legs[i].distance.value;
+        timeCostSec += myroute.legs[i].duration.value;
     }
     total = total / 1000;
-    document.getElementById('total').innerHTML = total + ' km';
+    document.getElementById('total-dist').innerHTML = total + ' km';
+
+    if (timeCostSec < 3600) {
+        var accurateTimeCost = timeCostSec / 60;
+        document.getElementById('total-time').innerHTML = accurateTimeCost.toPrecision(4) + ' mins';
+    } else {
+        var accurateTimeCost = timeCostSec / 3600;
+        document.getElementById('total-time').innerHTML = accurateTimeCost.toPrecision(4) + ' hours';
+    }
+
+    var timeSpare = timeParser(timeAvailable) - timeCostSec;
+
+    if (timeSpare < 3600) {
+        var accurateTimeCost = timeSpare / 60;
+        document.getElementById('total-time-spare').innerHTML = accurateTimeCost.toPrecision(4) + ' mins';
+    } else {
+        var accurateTimeCost = timeSpare / 3600;
+        document.getElementById('total-time-spare').innerHTML = accurateTimeCost.toPrecision(4) + ' hours';
+    }
 }

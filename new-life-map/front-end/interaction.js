@@ -1,4 +1,5 @@
 var transMode;
+var timeAvailable;
 
 function switchView(index) {
     if (index == 0) {
@@ -20,6 +21,8 @@ $("#search-btn").click(function() {
     transMode = $("#transMode").val();
     updateMap();
     drawSearchingScope();
+
+    timeAvailable = $("#hourEstimate").val();
 
     $.get('/libraries', function(data) {
         var librariesArray = data;
