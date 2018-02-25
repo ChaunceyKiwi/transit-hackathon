@@ -1,9 +1,9 @@
 from = {lat: 49.269355, lng: -122.958724};
-to = {lat: 49.2640424, lng: -123.1274355};
+to = {lat: 49.2266034, lng: -123.0048016};
 var map;
 var directionsService;
 var directionsDisplay;
-var searchRange = 0.08;
+var searchRange = 0.03;
 
 function initMap()
 {
@@ -34,20 +34,12 @@ function updateMap()
     directionsDisplay.addListener('directions_changed', function() {
         computeTotalDistance(directionsDisplay.getDirections());
     });
+
+    switchView(1);
 }
 
-function displayRoute(service, display)
+function displayRoute(service, display, waypointFeasible)
 {
-    var waypointFeasible;
-    switch (placeKind) {
-        case "Library":
-            waypointFeasible = getWayPointsFeasible(window.LIBRARY_DATA, searchRange);
-            break;
-        case "Park":
-            waypointFeasible = getWayPointsFeasible(window.PARK_DATA, searchRange);
-            break;
-    }
-
     var waypts = [];
     for (var i = 0; i < waypointFeasible.length; i++) {
         waypts.push({

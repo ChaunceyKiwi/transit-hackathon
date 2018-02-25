@@ -1,11 +1,28 @@
-window.LIBRARY_DATA = {};
-window.PARK_DATA = {};
-
 var searchRangeShape;
 var markerSet = [];
+var markerHiddenSet = [];
 var originMarker;
 var destinationMarker;
-var markerSetTest = new Set();
+
+function hideMarker(type)
+{
+    for (var i = 0; i < markerSet.length; i++) {
+        if (markerSet[i].placeType == type) {
+            markerSet[i].setMap(null);
+            markerHiddenSet.push(markerSet[i]);
+        }
+    }
+}
+
+function showMarker(type)
+{
+    for (var i = 0; i < markerHiddenSet.length; i++) {
+        if (markerHiddenSet[i].placeType == type) {
+            markerHiddenSet[i].setMap(map);
+            markerSet.push(markerHiddenSet[i]);
+        }
+    }
+}
 
 function setOriginMarker(pos)
 {
@@ -29,34 +46,33 @@ function setDestinationMarker(pos)
     destinationMarker.setMap(map);
 }
 
-function addMarker(objArray)
+function addMarker(objArray, type)
 {
-    for (var i = 0; i < objArray.length; i++)
-    {
-        var string = objArray[i].position;
-        var array = string.split(',');
-        var pos = {lat: parseFloat(array[0]), lng: parseFloat(array[1])};
+    var objArrayFiltered = getWayPointsFeasible(objArray);
 
+    for (var i = 0; i < objArrayFiltered.length; i++)
+    {
         var infowindow = new google.maps.InfoWindow({
             content: "My Id is " +  i + "!"
         });
 
         var marker = new google.maps.Marker({
-            position: pos,
+            position: objArrayFiltered[i],
             map: map,
-            title: objArray[i].name,
             icon: 'grey-marker.png'
         });
 
+        marker.placeType = type;
         marker.window = infowindow;
+        marker.currState = 0;
 
         marker.addListener('click', function() {
-            if (markerSetTest.has(this)) {
+            if (this.currState == 1) {
+                this.currState = 0;
                 this.setIcon('grey-marker.png');
-                markerSetTest.delete(this);
             } else {
+                this.currState = 1;
                 this.setIcon('red-marker.png');
-                markerSetTest.add(this);
             }
         });
 
@@ -87,14 +103,14 @@ function getDistance(pos1, pos2)
     return Math.sqrt(latDiff * latDiff + lngDiff * lngDiff);
 }
 
-function getEllipseCoord(width)
+function getEllipseCoord()
 {
     const diffLat = to.lat - from.lat;
     const diffLng = to.lng - from.lng;
     var angle = Math.atan2(diffLat, diffLng);
 
     const c = getDistance(from, to) / 2;
-    const b = width;
+    const b = searchRange;
     const a = Math.sqrt(b * b + c * c);
     var parametricResults = [];
 
@@ -115,9 +131,9 @@ function getEllipseCoord(width)
     return results;
 }
 
-function drawSearchingScope(width)
+function drawSearchingScope()
 {
-    var coords = getEllipseCoord(width);
+    var coords = getEllipseCoord(searchRange);
 
     searchRangeShape = new google.maps.Polygon({
         paths: coords,
@@ -136,7 +152,7 @@ function compareDistance(pos1, pos2)
     return getDistance(pos1, from) - getDistance(pos2, from);
 }
 
-function getWayPointsFeasible(posArray, width)
+function getWayPointsFeasible(posArray)
 {
     var wayPointsFeasible = [];
 
@@ -150,7 +166,7 @@ function getWayPointsFeasible(posArray, width)
     }
 
     const c = getDistance(from, to) / 2;
-    const b = width;
+    const b = searchRange;
     const a = Math.sqrt(b * b + c * c);
     var parametricResults = [];
 
@@ -178,9 +194,7 @@ function getWayPointsFeasible(posArray, width)
         }
     }
 
-    wayPointsFeasible.sort(compareDistance);
-
-    return wayPointsFeasible.slice(0, placeNum);
+    return wayPointsFeasible;
 }
 
 
