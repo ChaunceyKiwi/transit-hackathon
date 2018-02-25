@@ -103,6 +103,31 @@ function drawSearchingScope(width)
     searchRangeShape.setMap(map);
 }
 
+function drawPolygon(parks)
+{
+    parks.forEach(function(park) {
+        park.forEach(function(coords){
+            var coordObjects = [];
+            coords.forEach(function(coord) {
+                var coordObject = {};
+                coordObject.lng = coord[0];
+                coordObject.lat = coord[1];
+                coordObjects.push(coordObject);
+            });
+            var polygon = new google.maps.Polygon({
+                paths: coordObjects,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#33cc33',
+                fillOpacity: 0.35
+            });
+            polygon.setMap(map);
+        });
+    });
+    
+}
+
 function compareDistance(pos1, pos2)
 {
     return getDistance(pos1, from) - getDistance(pos2, from);

@@ -20,11 +20,38 @@ $("#btn-route").click(function() {
             displayRoute(directionsService, directionsDisplay);
         });
     } else if (placeKind == "Park") {
-        // Fetch data of parks from server
+        // Fetch data of parks from ODEN's data
         $.get('/parks', function(data) {
             var parksArray = data;
-            window.PARK_DATA = parksArray.parks;
+            var features = parksArray.features;
+            var parkCoords = [];
+            window.PARK_DATA = [];
+            features.forEach(function(feature) {
+                var properties = feature.properties;
+                var park = {};
+                park.name = properties.Name;
+                park.location = properties.StrNum+" "+properties.StrName;
+                
+                if (feature.geometry.type === "MultiPolygon") {
+                    var polygons = feature.geometry.coordinates;
+                    var polygonCoords = [];
+                    polygons.forEach(function(polygon) {
+                        polygonCoords.push(polygon[0]);
+                    });
+                    parkCoords.push(polygonCoords);
+                    park.position = polygonCoords[0][0][1]+","+polygonCoords[0][0][0];
+                } else {
+                    var coords = feature.geometry.coordinates[0];
+                    var polygonCoords = [];
+                    polygonCoords.push(coords);
+                    parkCoords.push(polygonCoords);
+                    park.position = coords[0][1]+","+coords[0][0];
+                }
+                window.PARK_DATA.push(park);
+            })
+            
             clearMarker();
+            drawPolygon(parkCoords);
             addMarker(window.PARK_DATA);
             displayRoute(directionsService, directionsDisplay);
         });
