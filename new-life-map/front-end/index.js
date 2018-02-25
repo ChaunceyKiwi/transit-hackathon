@@ -3,7 +3,7 @@ to = {lat: 49.2266034, lng: -123.0048016};
 var map;
 var directionsService;
 var directionsDisplay;
-var searchRange = 0.01;
+var searchRange = 0.05;
 var waypts;
 
 function initMap()

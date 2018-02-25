@@ -29,13 +29,22 @@ body {
 
 #display-result {
     color: #e7f0fd;
+    padding-top: 1em;
 }
 
- .input-form {
+#result-info {
+    padding-left: 3em;
+}
+
+.input-form {
     background-color: #4688f1;
     border:none;
     border-bottom: 1px solid #98bdf7;
-    width: 70%;
+    width: 100%;
+}
+
+h5 {
+    text-transform: uppercase;
 }
 
 .input-form:focus {
@@ -50,7 +59,9 @@ body {
 #search-btn {
     background-color: #4688f1;
     color: #e7f0fd;
-    margin-bottom: 8px;
+    font-size: 2em;
+    margin-top: 40px;
+    margin-right: 1em;
 }
 
 input[type=text] {
@@ -86,15 +97,22 @@ input[type=text] {
 }
 
 #route-button {
-    margin-top: 67px;
+    margin-top: 3em;
     margin-right: 20px;
     color: #e7f0fd;
 }
 
-.back-btn, back-btn2 {
-    margin-top: 80px;
-    background-color: #4688f1;
-    color: #e7f0fd;
+#candidate-wrapper {
+    margin-top: 1.5em;
+    margin-left: 0.5em;
+}
+
+#back-btn {
+    padding-top: 4em;
+}
+
+#back-btn2 {
+    padding-top: 2em;
 }
 
 .adp-text, .adp-substep, .adp-summary, .adp-stepicon, .adp-legal {

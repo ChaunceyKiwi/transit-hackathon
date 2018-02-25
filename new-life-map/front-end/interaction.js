@@ -20,7 +20,7 @@ function switchView(index) {
 $("#search-btn").click(function() {
     transMode = $("#transMode").val();
     updateMap();
-    drawSearchingScope();
+    // drawSearchingScope();
 
     timeAvailable = $("#hourEstimate").val();
 
