@@ -24,7 +24,7 @@ body {
 #user-input, #candidate-choose, #display-result {
     height: 30%;
     overflow: scroll;
-    background-color: #4688f1;
+    background-color: #809092;
 }
 
 #display-result {
@@ -33,23 +33,23 @@ body {
 }
 
 #result-info {
-    padding-left: 3em;
+  padding-left: 3em;
 }
 
-.input-form {
-    background-color: #4688f1;
+ .input-form {
+    background-color: #809092;
     border:none;
-    border-bottom: 1px solid #98bdf7;
+    border-bottom: 1px solid #d5ddd4;
     width: 100%;
 }
 
 h5 {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .input-form:focus {
     border:none;
-    border-bottom: 1px solid #98bdf7;
+    border-bottom: 1px solid #d5ddd4;
 }
 
 ::placeholder {
@@ -57,16 +57,16 @@ h5 {
 }
 
 #search-btn {
-    background-color: #4688f1;
-    color: #e7f0fd;
+    background-color: #809092;
+    color: #d5ddd4;
     font-size: 2em;
     margin-top: 40px;
     margin-right: 1em;
 }
 
 input[type=text] {
-    background-color: #4688f1;
-    color: #e7f0fd;
+    background-color: #809092;
+    color: #d5ddd4;
 }
 
 #mapViewSub {
@@ -80,13 +80,17 @@ form select{
     border: none;
 }
 
+form option{
+  background-color: #809092;
+}
+
 .check-box {
-    background-color: #4688f1;
+    background-color: #809092;
     color: #e7f0fd;
 }
 
 input[type=text] {
-    background-color: #4688f1;
+    background-color: #809092;
     color: #e7f0fd;
 }
 
@@ -103,16 +107,16 @@ input[type=text] {
 }
 
 #candidate-wrapper {
-    margin-top: 1.5em;
-    margin-left: 0.5em;
+  margin-top: 1.5em;
+  margin-left: 0.5em;
 }
 
 #back-btn {
-    padding-top: 4em;
+  padding-top: 4em;
 }
 
 #back-btn2 {
-    padding-top: 2em;
+  padding-top: 2em;
 }
 
 .adp-text, .adp-substep, .adp-summary, .adp-stepicon, .adp-legal {
@@ -124,7 +128,7 @@ input[type=text] {
 }
 
 tbody {
-    background-color: #4688f1;
+    background-color: #809092;
 }
 
 .page-label {
